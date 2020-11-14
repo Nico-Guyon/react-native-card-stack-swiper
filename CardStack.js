@@ -138,6 +138,7 @@ class CardStack extends Component {
         cardA: children[aIndex] || null,
         cardB: children[bIndex] || null
       });
+      this.props.onNewCard(this.state.sindex - 2);
     }
   }
 
@@ -313,6 +314,7 @@ class CardStack extends Component {
 
     // index of the swiped card
     const index = (loop) ? this.mod(nextCard - 2, cards.length) : nextCard - 2;
+    const index1 = (loop) ? this.mod(nextCard - 1, cards.length) : nextCard - 1;
 
     if (index === cards.length - 1) {
       this.props.onSwipedAll();
@@ -360,6 +362,7 @@ class CardStack extends Component {
           sindex: nextCard + 1
         });
 
+        this.props.onNewCard(index1);
         this.props.onSwiped(index);
         switch (direction) {
           case 'left':
@@ -483,6 +486,7 @@ CardStack.propTypes = {
   onSwiped: PropTypes.func,
   onSwipedAll: PropTypes.func,
   onSwipe: PropTypes.func,
+  onNewCard: PropTypes.func,
 
   disableBottomSwipe: PropTypes.bool,
   disableLeftSwipe: PropTypes.bool,
@@ -514,6 +518,7 @@ CardStack.defaultProps = {
   onSwipedBottom: () => { },
   onSwipedAll: async () => { },
   onSwipe: () => { },
+  onNewCard: () => { },
 
   disableBottomSwipe: false,
   disableLeftSwipe: false,
