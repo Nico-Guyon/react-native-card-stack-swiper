@@ -422,6 +422,7 @@ class CardStack extends Component {
 
         {renderNoMoreCards()}
 
+        { cardB !== undefined && cardB !== null ?
         <Animated.View
           {...this._setPointerEvents(topCard, 'cardB')}
           style={[{
@@ -441,6 +442,8 @@ class CardStack extends Component {
           }, this.props.cardContainerStyle]}>
           {cardB}
         </Animated.View>
+        : null }
+        { cardA !== undefined && cardA !== null ?
         <Animated.View
           {...this._setPointerEvents(topCard, 'cardA')}
           style={[{
@@ -460,6 +463,7 @@ class CardStack extends Component {
           }, this.props.cardContainerStyle]}>
           {cardA}
         </Animated.View>
+        : null }
 
       </View>
     );
