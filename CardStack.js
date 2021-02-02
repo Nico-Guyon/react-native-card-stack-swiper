@@ -400,6 +400,49 @@ class CardStack extends Component {
   _setPointerEvents(topCard, topCardName) {
     return { pointerEvents: topCard === topCardName ? "auto" : "none" }
   }
+  
+  renderOpacityLayer(targetCard) {
+    const { drag, topCard } = this.state;
+
+    var likeOpacity = drag.x.interpolate({
+      inputRange: [0, width * 1.0],
+      outputRange: [0, 1]
+    });
+    
+    var dislikeOpacity = drag.x.interpolate({
+      inputRange: [width * -1.0, 0],
+      outputRange: [1, 0]
+    });
+   
+    if(topCard !== targetCard) {
+      return null;
+    }
+
+    return (
+      <>
+        <Animated.View style={{
+          position: 'absolute',
+          borderRadius: 15,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#FF510D',
+          opacity: likeOpacity,
+        }}></Animated.View>
+        <Animated.View style={{
+          position: 'absolute',
+          borderRadius: 15,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#0064FF',
+          opacity: dislikeOpacity,
+        }}></Animated.View>
+      </>
+    );
+  }
 
   render() {
 
@@ -422,6 +465,7 @@ class CardStack extends Component {
 
         {renderNoMoreCards()}
 
+      
         { cardB !== undefined && cardB !== null ?
         <Animated.View
           {...this._setPointerEvents(topCard, 'cardB')}
@@ -441,6 +485,7 @@ class CardStack extends Component {
             ]
           }, this.props.cardContainerStyle]}>
           {cardB}
+          {this.renderOpacityLayer('cardB')}
         </Animated.View>
         : null }
         { cardA !== undefined && cardA !== null ?
@@ -462,6 +507,7 @@ class CardStack extends Component {
             ]
           }, this.props.cardContainerStyle]}>
           {cardA}
+          {this.renderOpacityLayer('cardA')}
         </Animated.View>
         : null }
 
